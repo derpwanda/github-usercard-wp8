@@ -7,12 +7,12 @@ axios
     .get("https://api.github.com/users/derpwanda")
     .then(response => {
         console.log(response.data);
-        const data = response.data
+        const data = response.data;
 
-        const cards = document.querySelector('.cards')
-        const info = githubCard(data)
+        const cards = document.querySelector(".cards");
+        const info = githubCard(data);
 
-        cards.appendChild(info)
+        cards.appendChild(info);
     })
     .catch(error => {
         console.log("unsuccessful");
@@ -41,28 +41,26 @@ axios
 */
 
 const followersArray = [
-
-  'tetondan',
-  'dustinmyers',
-  'justsml',
-  'luishrd',
-  'bigknell'
+    "tetondan",
+    "dustinmyers",
+    "justsml",
+    "luishrd",
+    "bigknell"
 ];
 
-
 followersArray.forEach(user => {
-  axios.get(`https://api.github.com/users/${user}`)
-    .then (response => {
-      const card = githubCard(response.data)
-      const cards = document.querySelector('.cards')
-      cards.appendChild(card)
-    }) 
-    .catch(error => {
-      console.log("unsuccessful");
-      console.log(error);
-  });
-})
-
+    axios
+        .get(`https://api.github.com/users/${user}`)
+        .then(response => {
+            const card = githubCard(response.data);
+            const cards = document.querySelector(".cards");
+            cards.appendChild(card);
+        })
+        .catch(error => {
+            console.log("unsuccessful");
+            console.log(error);
+        });
+});
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -83,62 +81,59 @@ followersArray.forEach(user => {
 </div>
 
 */
-const cards = document.querySelector('.cards');
+const cards = document.querySelector(".cards");
 console.log(cards);
 
 const githubCard = data => {
-  const div = document.createElement('div')
-  div.classList.add("card")
+    const div = document.createElement("div");
+    div.classList.add("card");
 
-  const img = document.createElement('img')
-  img.src = data.avatar_url
-  div.appendChild(img)
+    const img = document.createElement("img");
+    img.src = data.avatar_url;
+    div.appendChild(img);
 
-  const cardInfo = document.createElement('div')
-  cardInfo.classList.add("card-info")
-  div.appendChild(cardInfo)
+    const cardInfo = document.createElement("div");
+    cardInfo.classList.add("card-info");
+    div.appendChild(cardInfo);
 
-  const name = document.createElement('h3')
-  name.classList.add('name')
-  name.textContent = data.name
-  cardInfo.appendChild(name)
+    const name = document.createElement("h3");
+    name.classList.add("name");
+    name.textContent = data.name;
+    cardInfo.appendChild(name);
 
-  const username = document.createElement('p')
-  username.classList.add('username')
-  username.textContent = data.login
-  cardInfo.appendChild(username)
+    const username = document.createElement("p");
+    username.classList.add("username");
+    username.textContent = data.login;
+    cardInfo.appendChild(username);
 
-  const location = document.createElement('p')
-  location.textContent = data.location || "not available"
-  cardInfo.appendChild(location)
+    const location = document.createElement("p");
+    location.textContent = data.location || "not available";
+    cardInfo.appendChild(location);
 
-  // const profileURL = document.createElement('a')
-  // profileURL.href = data.html_url
-  // cardInfo.appendChild(profileURL)
+    const profile = document.createElement("p");
+    profile.textContent = "Profile: ";
+    cardInfo.appendChild(profile);
 
-  const profileURL = document.createElement('a')
-  profileURL.setAttribute('href', data.html_url)
-  profileURL.innerText = 'Profile'
-  cardInfo.appendChild(profileURL)
+    const profileURL = document.createElement("a");
+    profileURL.setAttribute("href", data.html_url);
+    profileURL.innerText = "Github";
+    profile.appendChild(profileURL);
+    //appended to PROFILE/p tag, not the card or card info parent
 
-  const profile = document.createElement('p')
-  profile.textContent = "Profile: " + profileURL
-  cardInfo.appendChild(profile)
+    const followers = document.createElement("p");
+    followers.textContent = `Followers: ${data.followers}`;
+    cardInfo.appendChild(followers);
 
-  const followers = document.createElement('p')
-  followers.textContent = `Followers: ${data.followers}`
-  cardInfo.appendChild(followers)
+    const following = document.createElement("p");
+    following.textContent = `Following: ${data.following}`;
+    cardInfo.appendChild(following);
 
-  const following = document.createElement("p")
-  following.textContent = `Following: ${data.following}`
-  cardInfo.appendChild(following)
+    const bio = document.createElement("p");
+    bio.textContent = data.bio;
+    cardInfo.appendChild(bio);
 
-  const bio = document.createElement("p")
-  bio.textContent = data.bio
-  cardInfo.appendChild(bio)
-
-  return div
-}
+    return div;
+};
 
 /* List of LS Instructors Github username's: 
   tetondan
