@@ -8,6 +8,11 @@ axios
     .then(response => {
         console.log(response.data);
         const data = response.data
+
+        const cards = document.querySelector('.cards')
+        const info = githubCard(data)
+
+        cards.appendChild(info)
     })
     .catch(error => {
         console.log("unsuccessful");
@@ -78,36 +83,40 @@ const githubCard = data => {
 
   const username = document.createElement('p')
   username.classList.add('username')
-  username.textContent = data.username
+  username.textContent = data.login
   cardInfo.appendChild(username)
 
   const location = document.createElement('p')
-  location.textContent = data.location
+  location.textContent = data.location || "not available"
   cardInfo.appendChild(location)
 
-  const profile = document.createElement('p')
-  profile.textContent = 'Profile :'  + profileURL
-  cardInfo.appendChild(location)
+  // const profileURL = document.createElement('a')
+  // profileURL.href = data.html_url
+  // cardInfo.appendChild(profileURL)
 
   const profileURL = document.createElement('a')
-  profileURL.href = `${data.html_url}`
-  profileURL.textContent = `${data.html_url}`
-  cardInfo.appendChild(location)
+  profileURL.setAttribute('href', data.html_url)
+  profileURL.innerText = 'Profile'
+  cardInfo.appendChild(profileURL)
+
+  const profile = document.createElement('p')
+  profile.textContent = "Profile: " + profileURL
+  cardInfo.appendChild(profile)
 
   const followers = document.createElement('p')
   followers.textContent = `Followers: ${data.followers}`
-  cardInfo.appendChild(location)
+  cardInfo.appendChild(followers)
 
   const following = document.createElement("p")
-  followers.textContent = `Following: ${data.following}`
-  cardInfo.appendChild(location)
+  following.textContent = `Following: ${data.following}`
+  cardInfo.appendChild(following)
 
   const bio = document.createElement("p")
-  bio.textConent = data.bio
-  cardInfo.appendChild(location)
+  bio.textContent = data.bio
+  cardInfo.appendChild(bio)
 
 
-  return card
+  return div
 }
 
 /* List of LS Instructors Github username's: 
